@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Introducing Cat</title>
+  <style>
+    /* Base Styles */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      transition: background 1s, color 1s;
+    }
+    .section {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s ease-out, transform 1s ease-out;
+      position: relative;
+    }
+    .visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Theme Classes */
+    .theme-light {
+      background-color: #fff;
+      color: #000;
+    }
+    .theme-gray {
+      background-color: #444;
+      color: #ddd;
+    }
+    .theme-dark {
+      background-color: #000;
+      color: #fff;
+    }
+    /* Button Theme Overrides */
+    body.theme-dark .button {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      color: #fff;
+    }
+    body.theme-gray .button {
+      background: rgba(200, 200, 200, 0.1);
+      border: 2px solid rgba(200, 200, 200, 0.5);
+      color: #ddd;
+    }
+    body.theme-light .button {
+      background: rgba(0, 0, 0, 0.1);
+      border: 2px solid rgba(0, 0, 0, 0.5);
+      color: #000;
+    }
+    .button {
+      padding: 15px 30px;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      border: 2px solid rgba(255,255,255,0.5);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s, border 0.3s;
+      border-radius: 50px;
+    }
+    .button:hover {
+      background: rgba(255,255,255,0.3);
+      border: 2px solid rgba(255,255,255,0.7);
+    }
+    /* Positioning for Section 5's "See the Truth" button */
+    #section5 .button {
+      position: absolute;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    /* Navigation Buttons in Reveal - always visible when reveal shows */
+    .nav-buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+    }
+    .nav-buttons .button {
+      margin: 0 10px;
+      position: static;
+      transform: none;
+    }
+    /* Reveal Section */
+    #reveal {
+      display: none;
+      height: 100vh;
+      background: inherit;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      position: relative;
+    }
+    .transition-effect {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: inherit;
+      opacity: 1;
+      transition: opacity 2s ease-in-out;
+    }
+    .hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    #truth-text {
+      transition: opacity 0.5s ease-in-out;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+    }
+    /* Watermark Image Behind Text in Sections 1–5 */
+    .text-with-image {
+      position: relative;
+      display: inline-block;
+    }
+    .text-with-image img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 0;
+      opacity: 0.7;
+      width: 950px; /* Adjust size here */
+    }
+    .text-with-image h1,
+    .text-with-image h2 {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Section 1 -->
+  <div class="section" id="section1">
+    <div class="text-with-image">
+      <img src="https://i.postimg.cc/1zndDfyF/Pngtree-isolated-cat-on-white-background-9158356.png" alt="Cat Icon">
+      <h1>Introducing Cat</h1>
+    </div>
+  </div>
+  <!-- Section 2 -->
+  <div class="section" id="section2">
+    <div class="text-with-image">
+      <img src="https://i.postimg.cc/C58wF0b7/Pngtree-isolated-sitting-orange-cat-on-9158396.png" alt="Cat Icon">
+      <h2>A Vision of Elegance</h2>
+    </div>
+  </div>
+  <!-- Section 3 -->
+  <div class="section" id="section3">
+    <div class="text-with-image">
+      <img src="https://i.postimg.cc/1zndDfyF/Pngtree-isolated-cat-on-white-background-9158356.png" alt="Cat Icon">
+      <h2>Bring Colours To Your Life</h2>
+    </div>
+  </div>
+  <!-- Section 4 -->
+  <div class="section" id="section4">
+    <div class="text-with-image">
+      <img src="https://i.postimg.cc/1zndDfyF/Pngtree-isolated-cat-on-white-background-9158356.png" alt="Cat Icon">
+      <h2>The Perfect Companion As It Never Leaves You</h2>
+    </div>
+  </div>
+  <!-- Section 5 -->
+  <div class="section" id="section5">
+    <div class="text-with-image">
+      <img src="https://i.postimg.cc/1zndDfyF/Pngtree-isolated-cat-on-white-background-9158356.png" alt="Cat Icon">
+      <h2>The Truth</h2>
+    </div>
+    <button class="button" onclick="showReveal()">Learn More</button>
+  </div>
+  
+  <!-- Transition and Reveal Section -->
+  <div id="transition" class="transition-effect hidden"></div>
+  <div id="reveal">
+    <p id="truth-text"></p>
+    <div class="nav-buttons">
+      <button id="prev-btn" class="button" onclick="prevTruth()">Previous</button>
+      <button id="next-btn" class="button" onclick="nextTruth()">Next</button>
+    </div>
+  </div>
+  
+  <script>
+    // Fade in sections as they come into view
+    const sections = document.querySelectorAll('.section');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    sections.forEach(section => observer.observe(section));
+    
+    // Change theme based on scroll position for initial sections
+    window.addEventListener('scroll', () => {
+      const scrollPos = window.scrollY;
+      if (scrollPos < window.innerHeight) {
+        document.body.className = "theme-dark";
+      } else if (scrollPos < window.innerHeight * 2) {
+        document.body.className = "theme-gray";
+      } else if (scrollPos < window.innerHeight * 3) {
+        document.body.className = "theme-light";
+      } else {
+        document.body.className = "theme-dark";
+      }
+    });
+    
+    // Truth section messages and navigation with looping and theme cycling
+    const truthMessages = [
+      "The truth is...",
+      "It was never about the cat.",
+      "It was always about you.",
+      "You've made my life full of colors.",
+      "I found that you will be my best companion.",
+      "You'd be always supporting me on my high and low.",
+      "Although..",
+      "I may not be able to provide what other people would normally do",
+      "I can't hang out with you",
+      "I can't send you presents",
+      "But the thing is..",
+      "I'll be there for you",
+      "I'll always be by your side no matter what",
+      "I'll give you countless supports",
+      "Even if 8 billion of people saying 'that rock is blue'",
+      "And you said 'that rock is white'",
+      "I would lie to my own eye and i would bravely say",
+      "'That rock is white'",
+      "So..",
+      "Let's start a journey",
+      "Together",
+      "Just the two of us",
+      "Slowly",
+      "Till god seperate us",
+      "Dear Fella Fikri Attaqi",
+      "Would You Like To Join The Journey?"
+
+    ];
+    let currentTruthIndex = 0;
+    
+    function showReveal() {
+      document.getElementById('transition').classList.remove('hidden');
+      setTimeout(() => {
+        document.getElementById('reveal').style.display = 'flex';
+        document.getElementById('reveal').scrollIntoView({ behavior: 'smooth' });
+        currentTruthIndex = 0;
+        updateTruth();
+      }, 2000);
+    }
+    
+    function updateTruth() {
+      const truthText = document.getElementById('truth-text');
+      truthText.style.opacity = 0; // Fade out
+      setTimeout(() => {
+        truthText.innerHTML = truthMessages[currentTruthIndex];
+        truthText.style.opacity = 1; // Fade in
+        updateTheme();
+        updateNavButtons();
+      }, 500);
+    }
+    
+    function nextTruth() {
+      currentTruthIndex = (currentTruthIndex + 1) % truthMessages.length;
+      updateTruth();
+    }
+    
+    function prevTruth() {
+      currentTruthIndex = (currentTruthIndex - 1 + truthMessages.length) % truthMessages.length;
+      updateTruth();
+    }
+    
+    function updateTheme() {
+      // Cycle theme based on currentTruthIndex mod 3
+      const themeIndex = currentTruthIndex % 3;
+      if (themeIndex === 0) {
+        document.body.className = "theme-dark";
+      } else if (themeIndex === 1) {
+        document.body.className = "theme-gray";
+      } else {
+        document.body.className = "theme-light";
+      }
+    }
+    
+    function updateNavButtons() {
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+      
+      if (currentTruthIndex === 0) {
+        // At first truth: show "Back to Start" on the left, "Next" on the right
+        prevBtn.innerText = "Back to Start";
+        prevBtn.onclick = backToStart;
+        nextBtn.innerText = "Next";
+        nextBtn.onclick = nextTruth;
+      } else if (currentTruthIndex === truthMessages.length - 1) {
+        // At last truth: show "Previous" on the left, "Back to Start" on the right
+        prevBtn.innerText = "Previous";
+        prevBtn.onclick = prevTruth;
+        nextBtn.innerText = "Back to Start";
+        nextBtn.onclick = backToStart;
+      } else {
+        // Otherwise, show "Previous" and "Next"
+        prevBtn.innerText = "Previous";
+        prevBtn.onclick = prevTruth;
+        nextBtn.innerText = "Next";
+        nextBtn.onclick = nextTruth;
+      }
+    }
+    
+    function backToStart() {
+      document.getElementById('reveal').style.display = 'none';
+      document.getElementById('transition').classList.add('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+  <audio id="background-music" src="https://whyp.it/tracks/18337/example-track?t=00%3A02">
+    Your browser does not support the audio element.
+  </audio>
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
